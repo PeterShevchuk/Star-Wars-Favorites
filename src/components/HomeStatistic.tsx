@@ -1,10 +1,12 @@
 import {useGlobalState} from '../hooks/useGlobalState.tsx';
 import React, {useMemo} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {moderateScale} from '../utils/metrics.ts';
+import {Text, View} from 'react-native';
+import {useStyles} from '../hooks/useStyles.ts';
 
 export const HomeStatistic = () => {
   const {favorite} = useGlobalState();
+
+  const styles = useStyles(getStyles);
 
   const {male, female, others} = useMemo(() => {
     const male = favorite?.filter(item => item.gender === 'male').length || 0;
@@ -36,21 +38,21 @@ export const HomeStatistic = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = {
   view: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: moderateScale(16),
+    gap: 16,
   },
   block: {
     flex: 1,
     backgroundColor: 'white',
-    padding: moderateScale(15),
+    padding: 15,
   },
   blockText: {
-    fontSize: moderateScale(32),
+    fontSize: 32,
   },
   blockDescription: {
-    fontSize: moderateScale(12),
+    fontSize: 12,
   },
-});
+};

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
-import {moderateScale} from '../../utils/metrics.ts';
+import {useStyles} from '../../hooks/useStyles.ts';
 
 export const SearchIcon = (props: SvgProps) => {
+  const styles = useStyles({icon: {width: 20}});
   return (
     <Svg
-      width={moderateScale(20)}
-      height={moderateScale(20)}
+      width={styles.icon.width}
+      height={styles.icon.width}
       viewBox="0 0 20 20"
       {...props}>
       <Path

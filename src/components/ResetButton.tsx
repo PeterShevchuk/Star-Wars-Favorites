@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {moderateScale} from '../utils/metrics.ts';
+import {Text, TouchableOpacity} from 'react-native';
+import {useStyles} from '../hooks/useStyles.ts';
 
 interface IResetButton {
   label: string;
@@ -8,6 +8,8 @@ interface IResetButton {
 }
 
 export const ResetButton = ({label, onPress}: IResetButton) => {
+  const styles = useStyles(getStyles);
+
   return (
     <TouchableOpacity onPress={onPress} style={styles.resetButton}>
       <Text style={styles.resetButtonText}>{label}</Text>
@@ -15,19 +17,19 @@ export const ResetButton = ({label, onPress}: IResetButton) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = {
   resetButton: {
     borderColor: 'red',
     borderWidth: 1,
-    paddingHorizontal: moderateScale(15),
-    paddingVertical: moderateScale(5),
-    borderRadius: moderateScale(4),
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 4,
     justifyContent: 'center',
     alignItems: 'center',
   },
   resetButtonText: {
-    fontSize: moderateScale(14),
+    fontSize: 14,
     color: 'red',
     textTransform: 'uppercase',
   },
-});
+};

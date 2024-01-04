@@ -1,6 +1,13 @@
 import React from 'react';
 
 export type TListItemID = string;
+
+export enum IOrientationTypes {
+  PORTRAIT = 'PORTRAIT',
+  LANDSCAPE = 'LANDSCAPE',
+}
+
+export type IOrientation = keyof typeof IOrientationTypes;
 export interface IListItem {
   id: TListItemID;
   name: string;
@@ -32,6 +39,7 @@ export interface IParams {
 
 export type GlobalContent = {
   loader: Boolean;
+  orientation: IOrientation;
   startLoader: () => void;
   stopLoader: () => void;
   list: TList;
@@ -40,6 +48,7 @@ export type GlobalContent = {
   favorite: TList;
   favoriteToggle: (item: IListItem) => void;
   setParams: (params: Partial<IParams>) => void;
+  changeOrientation: (data: IOrientation) => void;
   resetFavorite: () => void;
 };
 

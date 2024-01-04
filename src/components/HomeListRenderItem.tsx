@@ -2,7 +2,7 @@ import {HeartIcon} from '../assets/svg/heart.tsx';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {IListItem} from '../interfaces/GlobalState.ts';
-import {moderateScale} from '../utils/metrics.ts';
+import {useStyles} from '../hooks/useStyles.ts';
 
 interface IHomeListRenderItem {
   item: IListItem;
@@ -17,6 +17,8 @@ export const HomeListRenderItem = ({
   onPressCharacter,
   onPressFavorite,
 }: IHomeListRenderItem) => {
+  const styles = useStyles(getStyles);
+
   return (
     <TouchableOpacity
       key={item.name}
@@ -38,17 +40,17 @@ export const HomeListRenderItem = ({
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = {
   itemView: {
     flex: 1,
     flexDirection: 'row',
-    padding: moderateScale(10),
-    gap: moderateScale(16),
+    padding: 10,
+    gap: 16,
     alignItems: 'center',
     borderColor: '#ccc',
   },
   title: {
-    fontSize: moderateScale(16),
+    fontSize: 16,
     fontWeight: '600',
   },
   descriptionBlock: {
@@ -56,11 +58,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    gap: moderateScale(10),
+    gap: 10,
   },
   column: {
     flex: 1,
-    fontSize: moderateScale(12),
+    fontSize: 12,
     fontWeight: '400',
   },
-});
+};

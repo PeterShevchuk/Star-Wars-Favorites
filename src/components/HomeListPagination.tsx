@@ -1,11 +1,13 @@
 import {ArrowIcon} from '../assets/svg/arrow.tsx';
 import React, {useCallback} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {useGlobalState} from '../hooks/useGlobalState.tsx';
-import {moderateScale} from '../utils/metrics.ts';
+import {useStyles} from '../hooks/useStyles.ts';
 
 export const HomeListPagination = () => {
   const {params, setParams} = useGlobalState();
+
+  const styles = useStyles(getStyles);
 
   const onPressPrev = useCallback(() => {
     if (params.previous) {
@@ -27,7 +29,7 @@ export const HomeListPagination = () => {
         onPress={onPressPrev}>
         <ArrowIcon style={{opacity: params.previous ? 1 : 0.6}} />
       </TouchableOpacity>
-      <Text>
+      <Text style={styles.text}>
         {params.count
           ? `${params.page * 10 - 9} - ${Math.min(
               params.page * 10,
@@ -50,11 +52,16 @@ export const HomeListPagination = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = {
   paginationBlock: {
     flexDirection: 'row',
     alignSelf: 'flex-end',
     alignItems: 'center',
   },
-  navButton: {paddingHorizontal: moderateScale(8)},
-});
+  navButton: {
+    paddingHorizontal: 8,
+  },
+  text: {
+    fontSize: 12,
+  },
+};

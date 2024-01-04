@@ -1,11 +1,13 @@
 import React, {useCallback} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {moderateScale} from '../utils/metrics.ts';
 import {useGlobalState} from '../hooks/useGlobalState.tsx';
 import {ResetButton} from './ResetButton.tsx';
+import {useStyles} from '../hooks/useStyles.ts';
 
 export const HomeTitleBlock = () => {
   const {resetFavorite} = useGlobalState();
+
+  const styles = useStyles(getStyles);
 
   const onPressReset = useCallback(() => {
     resetFavorite();
@@ -19,14 +21,14 @@ export const HomeTitleBlock = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = {
   view: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   title: {
-    fontSize: moderateScale(32),
+    fontSize: 32,
     fontFamily: 'Inter',
   },
-});
+};

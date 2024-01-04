@@ -2,6 +2,8 @@ import React, {createContext, useContext, useMemo, useState} from 'react';
 import {
   GlobalContent,
   IListItem,
+  IOrientation,
+  IOrientationTypes,
   IParams,
   TGlobalStateContextProvider,
   TList,
@@ -10,6 +12,7 @@ import {
 const defaultValue = {
   list: [],
   loader: false,
+  orientation: IOrientationTypes.PORTRAIT,
   params: {
     page: 1,
     count: 0,
@@ -23,6 +26,7 @@ const defaultValue = {
   startLoader: () => undefined,
   stopLoader: () => undefined,
   resetFavorite: () => undefined,
+  changeOrientation: () => undefined,
 };
 
 const GlobalStateContext = createContext<GlobalContent>(defaultValue);
@@ -30,6 +34,9 @@ const GlobalStateContext = createContext<GlobalContent>(defaultValue);
 export const GlobalStateContextProvider: TGlobalStateContextProvider =
   props => {
     const [loader, setLoader] = useState<Boolean>(defaultValue.loader);
+    const [orientation, changeOrientation] = useState<IOrientation>(
+      defaultValue.orientation,
+    );
     const [params, setParams] = useState<IParams>(defaultValue.params);
     const [list, setList] = useState<TList>(defaultValue.list);
     const [favorite, setFavorite] = useState<TList>(defaultValue.favorite);
@@ -51,11 +58,13 @@ export const GlobalStateContextProvider: TGlobalStateContextProvider =
 
     const value: GlobalContent = {
       loader,
+      orientation,
       favorite,
       list: parseList,
       params,
       setList,
       favoriteToggle,
+      changeOrientation,
       setParams: newParams => setParams(prev => ({...prev, ...newParams})),
       startLoader: () => setLoader(true),
       stopLoader: () => setLoader(false),
