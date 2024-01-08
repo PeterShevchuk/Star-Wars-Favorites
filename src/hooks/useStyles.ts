@@ -1,56 +1,20 @@
-import {
-  Dimensions,
-  ImageStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
-import {useCallback, useMemo} from 'react';
-import {useGlobalState} from './useGlobalState.tsx';
+import {StyleSheet} from 'react-native';
+import {useCallback} from 'react';
 import {NamedStyles} from '../interfaces/useStyles.ts';
-
-const guidelineBaseWidth = 360;
-const guidelineBaseHeight = 640;
-const scaleItems = [
-  'borderWidth',
-  'borderRadius',
-  'fontSize',
-  'gap',
-  'padding',
-  'paddingTop',
-  'paddingBottom',
-  'paddingRight',
-  'paddingLeft',
-  'paddingHorizontal',
-  'paddingVertical',
-  'margin',
-  'marginTop',
-  'marginBottom',
-  'marginRight',
-  'marginLeft',
-  'marginHorizontal',
-  'marginVertical',
-  'width',
-  'height',
-];
+import {guidelineBaseWidth, scaleItems} from '../constants/styles.ts';
+import {getSizesState} from '../store/app/selectors.ts';
+import {useAppSelector} from './useRedux.ts';
 
 export const useStyles = <T extends NamedStyles<T> | NamedStyles<any>>(
   styles: T & NamedStyles<any>,
 ): T => {
-  const {orientation} = useGlobalState();
-
-  const {width, scale} = useMemo(() => {
-    const screenWidth = Dimensions.get('screen').width;
-
-    return {
-      width: screenWidth,
-      scale: (size: number, factor = 0.5): number =>
-        size + ((width / guidelineBaseWidth) * size - size) * factor,
-    };
-  }, [orientation]);
+  const sizes = useAppSelector(getSizesState);
 
   const fixStyles = useCallback(
     (object = {}) => {
+      const scale = (size: number, factor = 0.5): number =>
+        size + ((sizes.width / guidelineBaseWidth) * size - size) * factor;
+
       const objectReduce = (acc: any, [key, value]: [string, any]) => {
         if (typeof value === 'object' && !Array.isArray(value)) {
           value = fixStyles(value);
@@ -65,7 +29,7 @@ export const useStyles = <T extends NamedStyles<T> | NamedStyles<any>>(
 
       return Object.entries(object).reduce(objectReduce, {});
     },
-    [width],
+    [sizes],
   );
 
   return StyleSheet.create({...fixStyles(styles)});

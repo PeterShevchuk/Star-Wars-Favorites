@@ -4,11 +4,16 @@ import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {ArrowIcon} from '../assets/svg/arrow.tsx';
 import {useStyles} from '../hooks/useStyles.ts';
 import {HeartIcon} from '../assets/svg/heart.tsx';
-import React from 'react';
-import {useGlobalState} from '../hooks/useGlobalState.tsx';
+import React, {useCallback} from 'react';
+import {useAppSelector} from '../hooks/useRedux.ts';
+import {getFavoriteListState} from '../store/list/selectors.ts';
+import {favoriteToggle} from '../store/list/slice.ts';
+import {useDispatch} from 'react-redux';
 
 export const DetailsScreen = () => {
-  const {favorite, favoriteToggle} = useGlobalState();
+  const dispatch = useDispatch();
+  const favorite = useAppSelector(getFavoriteListState);
+
   const {state} = useLocation();
   const navigate = useNavigate();
 
@@ -30,6 +35,10 @@ export const DetailsScreen = () => {
 
   const isFavorite = favorite.find(item => item.name === state.name);
 
+  const reset = useCallback(() => {
+    dispatch(favoriteToggle(state));
+  }, [state]);
+
   return (
     <Layout>
       <View
@@ -42,7 +51,7 @@ export const DetailsScreen = () => {
           <ArrowIcon />
           <Text>Go Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => favoriteToggle(state)}>
+        <TouchableOpacity onPress={reset}>
           <HeartIcon fill={isFavorite ? 'red' : 'black'} />
         </TouchableOpacity>
       </View>

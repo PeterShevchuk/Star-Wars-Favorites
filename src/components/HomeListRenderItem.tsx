@@ -1,8 +1,8 @@
 import {HeartIcon} from '../assets/svg/heart.tsx';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {IListItem} from '../interfaces/GlobalState.ts';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {useStyles} from '../hooks/useStyles.ts';
+import {IListItem} from '../store/list/interface.ts';
 
 interface IHomeListRenderItem {
   item: IListItem;

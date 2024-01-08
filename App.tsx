@@ -8,16 +8,19 @@
 import React from 'react';
 import {NativeRouter} from 'react-router-native';
 import {RootNavigation} from './src/screens/Root.tsx';
-import {GlobalStateContextProvider} from './src/hooks/useGlobalState.tsx';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {persisStore, store} from './src/store';
+import {PersistGate} from 'redux-persist/integration/react';
+import {Provider} from 'react-redux';
 
 function App() {
   return (
-    <NativeRouter>
-      <GlobalStateContextProvider>
-        <RootNavigation />
-      </GlobalStateContextProvider>
-    </NativeRouter>
+    <Provider store={store}>
+      <PersistGate loading={<></>} persistor={persisStore}>
+        <NativeRouter>
+          <RootNavigation />
+        </NativeRouter>
+      </PersistGate>
+    </Provider>
   );
 }
 

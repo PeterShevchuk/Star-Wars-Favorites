@@ -1,16 +1,17 @@
 import React, {useCallback} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {useGlobalState} from '../hooks/useGlobalState.tsx';
 import {ResetButton} from './ResetButton.tsx';
 import {useStyles} from '../hooks/useStyles.ts';
+import {useDispatch} from 'react-redux';
+import {resetFavorite} from '../store/list/slice.ts';
 
 export const HomeTitleBlock = () => {
-  const {resetFavorite} = useGlobalState();
+  const dispatch = useDispatch();
 
   const styles = useStyles(getStyles);
 
   const onPressReset = useCallback(() => {
-    resetFavorite();
+    dispatch(resetFavorite());
   }, []);
 
   return (

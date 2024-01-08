@@ -1,10 +1,11 @@
-import {useGlobalState} from '../hooks/useGlobalState.tsx';
 import React, {useMemo} from 'react';
 import {Text, View} from 'react-native';
 import {useStyles} from '../hooks/useStyles.ts';
+import {useAppSelector} from '../hooks/useRedux.ts';
+import {getFavoriteListState} from '../store/list/selectors.ts';
 
 export const HomeStatistic = () => {
-  const {favorite} = useGlobalState();
+  const favorite = useAppSelector(getFavoriteListState);
 
   const styles = useStyles(getStyles);
 

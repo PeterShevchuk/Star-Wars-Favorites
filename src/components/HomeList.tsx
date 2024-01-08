@@ -1,16 +1,22 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {useGlobalState} from '../hooks/useGlobalState.tsx';
 import {useService} from '../hooks/useService.ts';
 import {Text, TextInput, View} from 'react-native';
 import {SearchIcon} from '../assets/svg/searchIcon.tsx';
-import {IListItem} from '../interfaces/GlobalState.ts';
 import {HomeListPagination} from './HomeListPagination.tsx';
 import {HomeListRenderItem} from './HomeListRenderItem.tsx';
 import {ResetButton} from './ResetButton.tsx';
 import {useStyles} from '../hooks/useStyles.ts';
+import {useAppSelector} from '../hooks/useRedux.ts';
+import {geParamsListState, getDataListState} from '../store/list/selectors.ts';
+import {useDispatch} from 'react-redux';
+import {favoriteToggle} from '../store/list/slice.ts';
+import {IListItem, TList} from '../store/list/interface.ts';
 
 export const HomeList = () => {
-  const {list, params, favoriteToggle} = useGlobalState();
+  const dispatch = useDispatch();
+  const list = useAppSelector(getDataListState);
+  const {page} = useAppSelector(geParamsListState);
+
   const {getAllList, getCharacterDetails} = useService();
 
   const [search, setSearch] = useState('');
@@ -71,19 +77,21 @@ export const HomeList = () => {
 
   useEffect(() => {
     setSearch('');
-    getAllList(params);
-  }, [params.page]);
+    getAllList({page});
+  }, [page]);
 
   const onPressCharacter = useCallback((item: IListItem) => {
     getCharacterDetails(item.url);
   }, []);
 
   const onPressFavorite = useCallback((item: IListItem) => {
-    favoriteToggle(item);
+    dispatch(favoriteToggle(item));
   }, []);
 
   const parseList = useMemo(() => {
-    return search ? list.filter(item => item.name.includes(search)) : list;
+    return (
+      search ? list.filter(item => item.name.includes(search)) : list
+    ) as TList;
   }, [search, list]);
 
   return (

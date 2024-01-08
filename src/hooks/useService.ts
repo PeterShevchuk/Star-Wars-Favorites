@@ -1,37 +1,43 @@
 import {API} from '../_service/api.ts';
-import {useGlobalState} from './useGlobalState.tsx';
-import {IParams} from '../interfaces/GlobalState.ts';
 import {useNavigate} from 'react-router-native';
 import {navigation} from '../constants/navigation.ts';
+import {useDispatch} from 'react-redux';
+import {startLoading, stopLoading} from '../store/app/slice.ts';
+import {setList} from '../store/list/slice.ts';
+import {TParamsPartial} from '../store/list/interface.ts';
 
 export const useService = () => {
-  const {startLoader, stopLoader, setList, setParams} = useGlobalState();
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
-  const getAllList = async (params: IParams) => {
+  const getAllList = async (params: TParamsPartial) => {
     try {
-      startLoader();
+      dispatch(startLoading());
       const result = await API.getList(params);
 
       if (result.data.results.length > 0) {
-        setList(result.data.results);
-
-        setParams({
-          count: result.data.count,
-          next: !!result.data.next,
-          previous: !!result.data.previous,
-        });
+        dispatch(
+          setList({
+            data: result.data.results,
+            params: {
+              count: result.data.count,
+              next: !!result.data.next,
+              previous: !!result.data.previous,
+            },
+          }),
+        );
       }
     } catch (e) {
       console.log('getAllList error: ', e);
     } finally {
-      stopLoader();
+      dispatch(stopLoading());
     }
   };
 
   const getCharacterDetails = async (url: string) => {
     try {
-      startLoader();
+      dispatch(startLoading());
       const result = await API.getDetails(url);
 
       if (result.data) {
@@ -40,7 +46,7 @@ export const useService = () => {
     } catch (e) {
       console.log('getCharacterDetails error: ', e);
     } finally {
-      stopLoader();
+      dispatch(stopLoading());
     }
   };
 

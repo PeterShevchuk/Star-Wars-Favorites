@@ -1,8 +1,9 @@
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
-import {useGlobalState} from '../../hooks/useGlobalState.tsx';
+import {useAppSelector} from '../../hooks/useRedux.ts';
+import {getLoadingState} from '../../store/app/selectors.ts';
 
 export const LoaderLayout = () => {
-  const {loader} = useGlobalState();
+  const loader = useAppSelector(getLoadingState);
 
   return loader ? (
     <View style={[styles.container, StyleSheet.absoluteFill]}>

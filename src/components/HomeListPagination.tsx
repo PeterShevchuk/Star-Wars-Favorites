@@ -1,23 +1,27 @@
 import {ArrowIcon} from '../assets/svg/arrow.tsx';
 import React, {useCallback} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
-import {useGlobalState} from '../hooks/useGlobalState.tsx';
 import {useStyles} from '../hooks/useStyles.ts';
+import {useAppSelector} from '../hooks/useRedux.ts';
+import {geParamsListState} from '../store/list/selectors.ts';
+import {useDispatch} from 'react-redux';
+import {setParams} from '../store/list/slice.ts';
 
 export const HomeListPagination = () => {
-  const {params, setParams} = useGlobalState();
+  const dispatch = useDispatch();
+  const params = useAppSelector(geParamsListState);
 
   const styles = useStyles(getStyles);
 
   const onPressPrev = useCallback(() => {
     if (params.previous) {
-      setParams({page: params.page - 1});
+      dispatch(setParams({page: params.page - 1}));
     }
   }, [params]);
 
   const onPressNext = useCallback(() => {
     if (params.next) {
-      setParams({page: params.page + 1});
+      dispatch(setParams({page: params.page + 1}));
     }
   }, [params]);
 
