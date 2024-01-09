@@ -5,9 +5,7 @@ import {guidelineBaseWidth, scaleItems} from '../constants/styles.ts';
 import {getSizesState} from '../store/app/selectors.ts';
 import {useAppSelector} from './useRedux.ts';
 
-export const useStyles = <T extends NamedStyles<T> | NamedStyles<any>>(
-  styles: T & NamedStyles<any>,
-): T => {
+export const useStyles = (styles: any): NamedStyles => {
   const sizes = useAppSelector(getSizesState);
 
   const fixStyles = useCallback(
@@ -18,7 +16,7 @@ export const useStyles = <T extends NamedStyles<T> | NamedStyles<any>>(
       const objectReduce = (acc: any, [key, value]: [string, any]) => {
         if (typeof value === 'object' && !Array.isArray(value)) {
           value = fixStyles(value);
-        } else if (scaleItems.includes(key) && typeof value === 'number') {
+        } else if (typeof value === 'number' && scaleItems.includes(key)) {
           value = scale(value);
         }
 

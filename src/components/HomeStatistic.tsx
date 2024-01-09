@@ -17,7 +17,7 @@ export const HomeStatistic = () => {
     return {
       male,
       female,
-      others: favorite.length - male - female,
+      others: (favorite?.length || 0) - male - female,
     };
   }, [favorite]);
 

@@ -8,7 +8,6 @@ import {TParamsPartial} from '../store/list/interface.ts';
 
 export const useService = () => {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const getAllList = async (params: TParamsPartial) => {

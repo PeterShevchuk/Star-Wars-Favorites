@@ -7,7 +7,6 @@ export const Layout: TLayout = ({children, style}) => {
   const styles = useStyles({
     view: {
       flex: 1,
-      padding: 16,
       backgroundColor: '#F6F5E8',
     },
   });

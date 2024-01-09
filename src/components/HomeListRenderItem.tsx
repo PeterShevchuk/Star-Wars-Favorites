@@ -28,12 +28,12 @@ export const HomeListRenderItem = ({
         <HeartIcon fill={item.favorite ? 'red' : 'black'} />
       </TouchableOpacity>
       <View style={{flex: 1}}>
-        <Text style={styles.title}>{item.name || 'unknown'}</Text>
+        <Text style={styles.title}>{item.name || 'n/a'}</Text>
         <View style={styles.descriptionBlock}>
           <Text style={styles.column}>
-            Birth Year: {item.birth_year || 'unknown'}
+            Birth Year: {item.birth_year || 'n/a'}
           </Text>
-          <Text style={styles.column}>Gender: {item.gender || 'unknown'}</Text>
+          <Text style={styles.column}>Gender: {item.gender || 'n/a'}</Text>
         </View>
       </View>
     </TouchableOpacity>

@@ -8,7 +8,11 @@ import {useStyles} from '../hooks/useStyles.ts';
 
 export const HomeScreen = () => {
   const styles = useStyles({
-    view: {minWidth: '100%', gap: 16},
+    view: {
+      minWidth: '100%',
+      gap: 16,
+      padding: 16,
+    },
   });
 
   return (

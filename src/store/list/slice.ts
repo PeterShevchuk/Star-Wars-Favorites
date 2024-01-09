@@ -32,7 +32,7 @@ const slice = createSlice({
       state.favorite = initialState.favorite;
     },
     setList(state, {payload}: {payload: IListSetListPayload}) {
-      state.data = payload.data;
+      state.data = payload.data.map(item => ({...item, favorite: false}));
       state.params = {...state.params, ...payload.params};
     },
     setParams(state, {payload}: {payload: TParamsPartial}) {

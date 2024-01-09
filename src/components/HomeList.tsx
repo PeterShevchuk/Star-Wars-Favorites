@@ -21,59 +21,7 @@ export const HomeList = () => {
 
   const [search, setSearch] = useState('');
 
-  const styles = useStyles({
-    view: {
-      flex: 1,
-      backgroundColor: 'white',
-      borderRadius: 4,
-      padding: 16,
-      gap: 16,
-    },
-    searchWrapper: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 16,
-    },
-    table: {
-      flex: 1,
-      borderColor: '#ccc',
-      borderWidth: 1,
-      borderRadius: 4,
-    },
-    itemView: {
-      flex: 1,
-      flexDirection: 'row',
-      padding: 10,
-      gap: 16,
-      alignItems: 'center',
-      borderColor: '#ccc',
-    },
-    title: {
-      fontSize: 16,
-      fontWeight: '600',
-    },
-    descriptionBlock: {
-      flex: 1,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'flex-start',
-      gap: 10,
-    },
-    column: {
-      flex: 1,
-      fontSize: 12,
-      fontWeight: '400',
-    },
-    emptyList: {
-      alignSelf: 'center',
-      alignItems: 'center',
-      gap: 10,
-    },
-    notFoundText: {
-      fontSize: 16,
-    },
-  });
+  const styles = useStyles(getStyles);
 
   useEffect(() => {
     setSearch('');
@@ -127,4 +75,58 @@ export const HomeList = () => {
       <HomeListPagination />
     </View>
   );
+};
+
+const getStyles = {
+  view: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 4,
+    padding: 16,
+    gap: 16,
+  },
+  searchWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
+  table: {
+    flex: 1,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  itemView: {
+    flex: 1,
+    flexDirection: 'row',
+    padding: 10,
+    gap: 16,
+    alignItems: 'center',
+    borderColor: '#ccc',
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  descriptionBlock: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    gap: 10,
+  },
+  column: {
+    flex: 1,
+    fontSize: 12,
+    fontWeight: '400',
+  },
+  emptyList: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    gap: 10,
+  },
+  notFoundText: {
+    fontSize: 16,
+  },
 };
